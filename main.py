@@ -4,6 +4,8 @@ import vkmessage
 import weather_scraber
 import schedule
 import datetime
+import time
+
 
 def main():
     f = open('number_parta.txt', 'r+')
@@ -18,8 +20,13 @@ def main():
         f.close()
     weather = weather_scraber.weather_get("722cc1d8-68fb-4460-b269-9248a671a22d")
     messages = f'''
-    @all \n Доброе утро! Сегодня дежурит - {dejurnue.send_names(number_parta)}. Сейчас на улице {weather}°C. Расписание: 
+    @all \n Доброе утро! \n Сегодня дежурит - {dejurnue.send_names(number_parta)}. \n Сейчас на улице {weather}°C. Расписание: \n 1.  Английский / Информатика \n 2. Физика \n 3. Математика \n 4. Математика \n 5. Химия 
 '''
     today = datetime.datetime.today().isoweekday()
-    vkmessage.send_utro("1", messages, "photo-204420308_457239022")
-main()
+    vkmessage.send_utro("1", messages, "")
+
+schedule.every().day.at("22:23").do(main)
+
+while True:
+    schedule.run_pending()
+    time.sleep(1)
