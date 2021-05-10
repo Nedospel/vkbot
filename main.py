@@ -23,9 +23,9 @@ def main():
     @all \n Доброе утро! \n Сегодня дежурит - {dejurnue.send_names(number_parta)}. \n Сейчас на улице {weather}°C. Расписание: \n 1.  Английский / Информатика \n 2. Физика \n 3. Математика \n 4. Математика \n 5. Химия 
 '''
     today = datetime.datetime.today().isoweekday()
-    vkmessage.send_utro("1", messages, "")
+    vkmessage.send_utro("3", messages, "")
 
-schedule.every().day.at("22:23").do(main)
+schedule.every().day.at("06:30").do(main)
 
 while True:
     schedule.run_pending()
