@@ -24,7 +24,7 @@ def main():
     messages = f'''
     @all \n Доброе утро! \n Сегодня дежурит - {dejurnue.send_names(number_parta)}. \n Сейчас на улице {weather[2]}°C, {weather[3]}. \n Днем будет {weather[0]}°C, {weather[1]} \n Расписание: \n {raspisanie.raspisanie_list[today]} 
 '''
-    vkmessage.send_utro("1", messages, "")
+    vkmessage.send_utro("3", messages, "")
 
 schedule.every().day.at("06:30").do(main)
 
