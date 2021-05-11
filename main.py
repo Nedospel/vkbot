@@ -5,6 +5,7 @@ import weather_scraber
 import schedule
 import datetime
 import time
+import functools
 
 
 def main():
@@ -18,15 +19,39 @@ def main():
     else:
         f.write(str(number_parta + 1))
         f.close()
-    weather = weather_scraber.weather_get("722cc1d8-68fb-4460-b269-9248a671a22d")
-    messages = f'''
-    @all \n Доброе утро! \n Сегодня дежурит - {dejurnue.send_names(number_parta)}. \n Сейчас на улице {weather}°C. Расписание: \n 1.  Английский / Информатика \n 2. Физика \n 3. Математика \n 4. Математика \n 5. Химия 
-'''
+    weather = weather_scraber.weather_get("4a744877-13d9-4b02-87cb-d8e148d29708")
     today = datetime.datetime.today().isoweekday()
-    vkmessage.send_utro("3", messages, "")
+    messages = f'''
+    @all \n Доброе утро! \n Сегодня дежурит - {dejurnue.send_names(number_parta)}. \n Сейчас на улице {weather[2]}°C, {weather[3]}. \n Днем будет {weather[0]}°C, {weather[1]} \n Расписание: \n {raspisanie.raspisanie_list[today]} 
+'''
+    vkmessage.send_utro("1", messages, "")
 
 schedule.every().day.at("06:30").do(main)
 
+def catch_exceptions(cancel_on_failure=False):
+    def catch_exceptions_decorator(job_func):
+        @functools.wraps(job_func)
+        def wrapper(*args, **kwargs):
+            try:
+                return job_func(*args, **kwargs)
+            except:
+                import traceback
+                print(traceback.format_exc())
+                if cancel_on_failure:
+                    return schedule.CancelJob
+        return wrapper
+    return catch_exceptions_decorator
+
+@catch_exceptions(cancel_on_failure=True)
+def bad_task():
+    return 1 / 0
+
+schedule.every(60).seconds.do(bad_task)
+
 while True:
-    schedule.run_pending()
-    time.sleep(1)
+    try:
+        schedule.run_pending()
+        time.sleep(1)
+    except:
+        print()
+
