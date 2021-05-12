@@ -9,6 +9,7 @@ import functools
 
 
 def main():
+    weather = weather_scraber.weather_get("4a744877-13d9-4b02-87cb-d8e148d29708")
     f = open('number_parta.txt', 'r+')
     number_parta = int(f.read())
     f.seek(0)
@@ -19,7 +20,6 @@ def main():
     else:
         f.write(str(number_parta + 1))
         f.close()
-    weather = weather_scraber.weather_get("4a744877-13d9-4b02-87cb-d8e148d29708")
     today = datetime.datetime.today().isoweekday()
     messages = f'''
     @all \n Доброе утро! \n Сегодня дежурит - {dejurnue.send_names(number_parta)}. \n Сейчас на улице {weather[2]}°C, {weather[3]}. \n Днем будет {weather[0]}°C, {weather[1]} \n Расписание: \n {raspisanie.raspisanie_list[today]} 

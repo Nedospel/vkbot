@@ -33,7 +33,7 @@ def weather_get(yandexweather_api):
     fact_temp = fact["temp"]
     fact_uslovia = conditions[fact["condition"]]
     for i in ((responsea["forecast"])["parts"]):
-        if i["part_name"] == "day":
+        if i["part_name"] == "night":
             forecast_day = i
     forecast_day_temp = forecast_day["temp_avg"]
     forecast_day_uslovia = conditions[forecast_day["condition"]]
